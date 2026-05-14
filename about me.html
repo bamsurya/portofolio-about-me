@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio – Bambang Suryadinata</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a08;
+      --surface: #111110;
+      --surface2: #1a1a18;
+      --accent: #d4a853;
+      --accent2: #8fb87a;
+      --text: #e8e4dc;
+      --text-muted: #7a7770;
+      --border: #2a2a28;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999;
+      opacity: .35;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.4rem 4rem;
+      background: rgba(10,10,8,.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      animation: fadeDown .6s ease both;
+    }
+    @keyframes fadeDown { from { opacity:0; transform:translateY(-16px); } to { opacity:1; transform:none; } }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--accent);
+      letter-spacing: .02em;
+    }
+    .nav-links { display: flex; gap: 2.4rem; }
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: .78rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color .25s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 10rem 4rem 6rem;
+      position: relative; overflow: hidden;
+    }
+
+    /* diagonal bg line accent */
+    #hero::after {
+      content: '';
+      position: absolute; top: -120px; right: -80px;
+      width: 600px; height: 600px;
+      border: 1px solid rgba(212,168,83,.12);
+      border-radius: 50%;
+      animation: spin 30s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .hero-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: .78rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 1.4rem;
+      animation: fadeUp .7s .1s both;
+    }
+
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.2rem, 9vw, 7.5rem);
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      color: var(--text);
+      margin-bottom: .6rem;
+      animation: fadeUp .7s .2s both;
+    }
+    .hero-name em { color: var(--accent); font-style: italic; }
+
+    .hero-role {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 2.8rem;
+      animation: fadeUp .7s .35s both;
+    }
+
+    .hero-cta {
+      display: flex; gap: 1.2rem; flex-wrap: wrap;
+      animation: fadeUp .7s .48s both;
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .85rem 2rem;
+      font-family: 'DM Mono', monospace;
+      font-size: .82rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all .25s;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #0a0a08;
+      border: 1px solid var(--accent);
+    }
+    .btn-primary:hover { background: transparent; color: var(--accent); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 6rem 4rem; }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: .75rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.15;
+      margin-bottom: 3rem;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      border-top: 1px solid var(--border);
+    }
+    .about-photo {
+      position: relative;
+    }
+    .photo-frame {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Mono', monospace;
+      font-size: .78rem;
+      color: var(--text-muted);
+      letter-spacing: .1em;
+      position: relative;
+      overflow: hidden;
+    }
+    .photo-frame::before {
+      content: '';
+      position: absolute; inset: 8px;
+      border: 1px solid rgba(212,168,83,.2);
+    }
+    .photo-badge {
+      position: absolute;
+      bottom: -1rem; right: -1rem;
+      background: var(--accent);
+      color: #0a0a08;
+      padding: .6rem 1.2rem;
+      font-family: 'DM Mono', monospace;
+      font-size: .75rem;
+      letter-spacing: .1em;
+    }
+    .about-text p { color: var(--text-muted); margin-bottom: 1.4rem; }
+    .about-info {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+      margin-top: 2rem;
+    }
+    .info-item { border-left: 2px solid var(--accent); padding-left: 1rem; }
+    .info-label { font-family: 'DM Mono', monospace; font-size: .72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .1em; }
+    .info-value { font-size: .95rem; color: var(--text); margin-top: .25rem; }
+
+    /* ── SKILLS ── */
+    #skills { border-top: 1px solid var(--border); background: var(--surface); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1px;
+      border: 1px solid var(--border);
+      margin-top: 1rem;
+    }
+    .skill-card {
+      background: var(--surface);
+      padding: 1.8rem;
+      transition: background .25s;
+    }
+    .skill-card:hover { background: var(--surface2); }
+    .skill-icon { font-size: 1.6rem; margin-bottom: .8rem; }
+    .skill-name { font-size: .95rem; font-weight: 500; margin-bottom: .4rem; }
+    .skill-level {
+      height: 2px;
+      background: var(--border);
+      position: relative;
+      margin-top: .8rem;
+    }
+    .skill-fill {
+      position: absolute; top: 0; left: 0; height: 100%;
+      background: var(--accent);
+      transition: width 1s ease;
+    }
+    .skill-pct { font-family: 'DM Mono', monospace; font-size: .72rem; color: var(--text-muted); margin-top: .4rem; }
+
+    /* ── EXPERIENCE ── */
+    #experience { border-top: 1px solid var(--border); }
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+    }
+    .timeline-item {
+      position: relative;
+      padding-bottom: 3rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute; left: -2.36rem; top: .35rem;
+      width: 10px; height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+    }
+    .timeline-period {
+      font-family: 'DM Mono', monospace;
+      font-size: .72rem; color: var(--accent2);
+      letter-spacing: .1em; text-transform: uppercase;
+      margin-bottom: .4rem;
+    }
+    .timeline-role { font-family: 'Playfair Display', serif; font-size: 1.35rem; margin-bottom: .25rem; }
+    .timeline-company { color: var(--text-muted); font-size: .9rem; margin-bottom: .8rem; }
+    .timeline-desc { color: var(--text-muted); font-size: .9rem; max-width: 560px; }
+
+    /* ── PROJECTS ── */
+    #projects { border-top: 1px solid var(--border); background: var(--surface); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .project-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      transition: border-color .25s, transform .25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .35s;
+    }
+    .project-card:hover::before { transform: scaleX(1); }
+    .project-card:hover { border-color: rgba(212,168,83,.3); transform: translateY(-4px); }
+    .project-tag {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: .7rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 1rem;
+    }
+    .project-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; margin-bottom: .6rem; }
+    .project-desc { color: var(--text-muted); font-size: .88rem; margin-bottom: 1.4rem; }
+    .project-stack { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .stack-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: .7rem;
+      padding: .3rem .7rem;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 2px;
+    }
+
+    /* ── EDUCATION ── */
+    #education { border-top: 1px solid var(--border); }
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .edu-card {
+      border: 1px solid var(--border);
+      padding: 2rem;
+      background: var(--surface);
+    }
+    .edu-year {
+      font-family: 'DM Mono', monospace;
+      font-size: .72rem; color: var(--accent);
+      letter-spacing: .1em; text-transform: uppercase;
+      margin-bottom: .6rem;
+    }
+    .edu-degree { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: .3rem; }
+    .edu-school { color: var(--text-muted); font-size: .9rem; }
+    .edu-gpa {
+      display: inline-block;
+      margin-top: 1rem;
+      font-family: 'DM Mono', monospace;
+      font-size: .75rem;
+      color: var(--accent2);
+      padding: .3rem .8rem;
+      border: 1px solid var(--accent2);
+      border-radius: 2px;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      text-align: center;
+    }
+    #contact .section-title { margin-bottom: 1rem; }
+    #contact p { color: var(--text-muted); max-width: 480px; margin: 0 auto 2.5rem; }
+    .contact-links {
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 1.2rem;
+    }
+    .contact-link {
+      display: flex; align-items: center; gap: .6rem;
+      font-family: 'DM Mono', monospace;
+      font-size: .82rem;
+      letter-spacing: .08em;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: .7rem 1.4rem;
+      border: 1px solid var(--border);
+      transition: all .25s;
+    }
+    .contact-link:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem 4rem;
+      border-top: 1px solid var(--border);
+      font-family: 'DM Mono', monospace;
+      font-size: .72rem;
+      color: var(--text-muted);
+      letter-spacing: .08em;
+    }
+
+    /* ── SCROLL ANIMATION TRIGGER ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      #hero { padding: 8rem 1.5rem 4rem; }
+      section { padding: 4rem 1.5rem; }
+      #about { grid-template-columns: 1fr; gap: 2.5rem; }
+      .edu-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <div class="nav-logo">Portfolio</div>
+  <div class="nav-links">
+    <a href="#about">Tentang</a>
+    <a href="#skills">Keahlian</a>
+    <a href="#experience">Pengalaman</a>
+    <a href="#projects">Proyek</a>
+    <a href="#contact">Kontak</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <p class="hero-tag">✦ Available for hire — 2026</p>
+  <h1 class="hero-name">Bambang Suryadinata</h1>
+  <p class="hero-role">Frontend Developer berbasis di Balikpapan — menciptakan pengalaman digital yang modern dan elegan.</p>
+  <div class="hero-cta">
+    <a href="#projects" class="btn btn-primary">↓ Lihat Proyek</a>
+    <a href="resume.pdf" class="btn btn-ghost" download>↗ Download CV</a>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about">
+  <div class="about-photo">
+    <div class="photo-frame">
+      <!-- Ganti src di bawah dengan foto Anda -->
+      <!-- <img src="foto-anda.jpg" alt="Foto Profil" style="width:100%;height:100%;object-fit:cover;"> -->
+      [ Foto Profil ]
+      <div class="photo-badge">Available ✓</div>
+    </div>
+  </div>
+  <div class="about-text">
+    <p class="section-label">01 — Tentang Saya</p>
+    <h2 class="section-title" style="margin-bottom:1.5rem;">Seorang kreator<br><em style="font-style:italic;color:var(--accent);">yang peduli detail</em></h2>
+    <p>Saya adalah seorang desainer dan pengembang dengan pengalaman lebih dari 4 tahun membangun produk digital. Saya percaya bahwa desain terbaik adalah yang tidak terlihat — yang hanya terasa tepat dan mudah bagi penggunanya.</p>
+    <p>Latar belakang saya di bidang ilmu komputer dan psikologi kognitif memberi saya sudut pandang unik dalam memecahkan masalah desain yang kompleks. Saya senang berkolaborasi lintas tim untuk menghadirkan pengalaman pengguna yang berkesan.</p>
+    <div class="about-info">
+      <div class="info-item">
+        <div class="info-label">Nama</div>
+        <div class="info-value">[Nama Anda]</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Lokasi</div>
+        <div class="info-value">Jakarta, Indonesia</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Email</div>
+        <div class="info-value">nama@email.com</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Status</div>
+        <div class="info-value">Aktif mencari kerja</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SKILLS ═══ -->
+<section id="skills">
+  <p class="section-label reveal">02 — Keahlian</p>
+  <h2 class="section-title reveal">Kemampuan &amp; <em style="font-style:italic;color:var(--accent);">Teknologi</em></h2>
+  <div class="skills-grid reveal">
+    <!-- Sesuaikan keahlian berikut -->
+    <div class="skill-card">
+      <div class="skill-icon">🎨</div>
+      <div class="skill-name">UI/UX Design</div>
+      <div class="skill-level"><div class="skill-fill" data-w="92%"></div></div>
+      <div class="skill-pct">92%</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">⚛️</div>
+      <div class="skill-name">React / Next.js</div>
+      <div class="skill-level"><div class="skill-fill" data-w="85%"></div></div>
+      <div class="skill-pct">85%</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🖥️</div>
+      <div class="skill-name">HTML / CSS / JS</div>
+      <div class="skill-level"><div class="skill-fill" data-w="95%"></div></div>
+      <div class="skill-pct">95%</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🐍</div>
+      <div class="skill-name">Python</div>
+      <div class="skill-level"><div class="skill-fill" data-w="75%"></div></div>
+      <div class="skill-pct">75%</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🗄️</div>
+      <div class="skill-name">SQL / PostgreSQL</div>
+      <div class="skill-level"><div class="skill-fill" data-w="78%"></div></div>
+      <div class="skill-pct">78%</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">✏️</div>
+      <div class="skill-name">Figma / Prototyping</div>
+      <div class="skill-level"><div class="skill-fill" data-w="90%"></div></div>
+      <div class="skill-pct">90%</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ EXPERIENCE ═══ -->
+<section id="experience">
+  <p class="section-label reveal">03 — Pengalaman</p>
+  <h2 class="section-title reveal">Riwayat<br><em style="font-style:italic;color:var(--accent);">Pekerjaan</em></h2>
+  <div class="timeline">
+
+    <!-- Item 1 -->
+    <div class="timeline-item reveal">
+      <div class="timeline-period">Jan 2023 – Sekarang</div>
+      <div class="timeline-role">Senior UI/UX Designer</div>
+      <div class="timeline-company">PT. Contoh Digital Indonesia — Jakarta</div>
+      <div class="timeline-desc">Memimpin desain produk untuk platform SaaS B2B, meningkatkan retensi pengguna sebesar 34% melalui perancangan ulang onboarding flow. Berkolaborasi langsung dengan tim produk dan engineering.</div>
+    </div>
+
+    <!-- Item 2 -->
+    <div class="timeline-item reveal">
+      <div class="timeline-period">Jun 2021 – Des 2022</div>
+      <div class="timeline-role">Frontend Developer</div>
+      <div class="timeline-company">Startup XYZ — Bandung</div>
+      <div class="timeline-desc">Membangun komponen React yang digunakan di seluruh produk perusahaan. Mengurangi waktu loading halaman utama dari 6 detik menjadi 1.8 detik dengan optimasi kode dan aset.</div>
+    </div>
+
+    <!-- Item 3 -->
+    <div class="timeline-item reveal">
+      <div class="timeline-period">Agu 2020 – Mei 2021</div>
+      <div class="timeline-role">UI Designer (Magang)</div>
+      <div class="timeline-company">Agency ABC — Remote</div>
+      <div class="timeline-desc">Mengerjakan desain interface untuk 8 klien berbeda. Belajar workflow desain profesional dari wireframe hingga handoff ke developer menggunakan Figma.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ PROJECTS ═══ -->
+<section id="projects">
+  <p class="section-label reveal">04 — Proyek</p>
+  <h2 class="section-title reveal">Karya<br><em style="font-style:italic;color:var(--accent);">Terpilih</em></h2>
+  <div class="projects-grid">
+
+    <div class="project-card reveal">
+      <span class="project-tag">Web App</span>
+      <h3 class="project-title">Dashboard Analitik Penjualan</h3>
+      <p class="project-desc">Platform analitik real-time untuk UMKM yang menampilkan tren penjualan, prediksi stok, dan laporan otomatis dalam satu antarmuka yang bersih.</p>
+      <div class="project-stack">
+        <span class="stack-tag">React</span>
+        <span class="stack-tag">Node.js</span>
+        <span class="stack-tag">PostgreSQL</span>
+        <span class="stack-tag">Chart.js</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <span class="project-tag">Mobile UI</span>
+      <h3 class="project-title">Aplikasi Kesehatan Mental</h3>
+      <p class="project-desc">Desain UX untuk aplikasi mood tracking dan meditasi. Fokus pada pengalaman onboarding yang empatik dan habit loop yang mendorong konsistensi pengguna.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Figma</span>
+        <span class="stack-tag">Prototyping</span>
+        <span class="stack-tag">User Research</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <span class="project-tag">Full-stack</span>
+      <h3 class="project-title">Platform E-learning</h3>
+      <p class="project-desc">Sistem manajemen kursus online dengan fitur live quiz, sertifikasi otomatis, dan integrasi pembayaran yang digunakan oleh 1.200+ pelajar aktif.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Next.js</span>
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">Stripe</span>
+        <span class="stack-tag">Supabase</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ EDUCATION ═══ -->
+<section id="education">
+  <p class="section-label reveal">05 — Pendidikan</p>
+  <h2 class="section-title reveal">Latar Belakang<br><em style="font-style:italic;color:var(--accent);">Akademik</em></h2>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <div class="edu-year">2017 – 2021</div>
+      <div class="edu-degree">S1 Teknik Informatika</div>
+      <div class="edu-school">Universitas Indonesia — Depok</div>
+      <div class="edu-gpa">IPK 3.72 / 4.00</div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-year">2023</div>
+      <div class="edu-degree">Google UX Design Certificate</div>
+      <div class="edu-school">Google via Coursera — Online</div>
+      <div class="edu-gpa">Selesai dengan Distinction</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <p class="section-label">06 — Kontak</p>
+  <h2 class="section-title">Mari<br><em style="font-style:italic;color:var(--accent);">Berkolaborasi</em></h2>
+  <p>Saya terbuka untuk peluang kerja full-time maupun freelance. Jangan ragu menghubungi saya melalui salah satu kanal di bawah ini.</p>
+  <div class="contact-links">
+    <a href="mailto:nama@email.com" class="contact-link">📧 Email</a>
+    <a href="https://linkedin.com/in/username" class="contact-link" target="_blank">🔗 LinkedIn</a>
+    <a href="https://github.com/username" class="contact-link" target="_blank">💻 GitHub</a>
+    <a href="https://wa.me/62812345678" class="contact-link" target="_blank">💬 WhatsApp</a>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <p>© 2025 [Nama Anda] — Dibuat dengan ❤️ di Jakarta</p>
+</footer>
+
+<script>
+  // ─── Reveal on Scroll ───
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        e.target.style.transitionDelay = (i * 0.07) + 's';
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => io.observe(el));
+
+  // ─── Skill Bar Animation ───
+  const fills = document.querySelectorAll('.skill-fill');
+  const ioSkill = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.width = e.target.dataset.w;
+        ioSkill.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  fills.forEach(f => { f.style.width = '0'; ioSkill.observe(f); });
+
+  // ─── Active nav link ───
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current
+        ? 'var(--accent)' : '';
+    });
+  });
+</script>
+</body>
+</html>
